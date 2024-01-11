@@ -32,10 +32,10 @@ if __name__ == "__main__":
                                           filename="best_model.ckpt",
                                           save_top_k=1,
                                           save_last=True,
-                                          monitor="val_acc_step",
+                                          monitor="val_acc",
                                           mode="max")
 
-    early_stop_callback = EarlyStopping(monitor="val_loss_step",
+    early_stop_callback = EarlyStopping(monitor="val_loss",
                                         mode="min",
                                         patience=5,
                                         verbose=True)

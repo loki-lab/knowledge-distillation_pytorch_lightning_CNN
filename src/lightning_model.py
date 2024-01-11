@@ -26,8 +26,8 @@ class LightningModel(LightningModule):
         output = self.forward(image)
         loss = nn.CrossEntropyLoss()(output, label)
         accuracy = self.metrics(output, label)
-        self.log("train_loss_step", loss, on_step=False, on_epoch=True)
-        self.log("train_acc_step", accuracy, on_step=False, on_epoch=True)
+        self.log("train_loss", loss, on_step=False, on_epoch=True)
+        self.log("train_acc", accuracy, on_step=False, on_epoch=True)
 
         return loss
 
@@ -36,8 +36,8 @@ class LightningModel(LightningModule):
         output = self.forward(image)
         loss = nn.CrossEntropyLoss()(output, label)
         accuracy = self.metrics(output, label)
-        self.log("val_loss_step", loss, on_step=False, on_epoch=True)
-        self.log("val_acc_step", accuracy, on_step=False, on_epoch=True)
+        self.log("val_loss", loss, on_step=False, on_epoch=True)
+        self.log("val_acc", accuracy, on_step=False, on_epoch=True)
 
         return loss
 

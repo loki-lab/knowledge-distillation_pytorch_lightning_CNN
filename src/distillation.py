@@ -42,10 +42,10 @@ if __name__ == "__main__":
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
                                           save_top_k=4,
-                                          monitor="val_acc_step",
+                                          monitor="val_acc",
                                           mode="max")
 
-    early_stop_callback = EarlyStopping(monitor="val_loss_step",
+    early_stop_callback = EarlyStopping(monitor="val_loss",
                                         mode="min",
                                         patience=4,
                                         verbose=True)
