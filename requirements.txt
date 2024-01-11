@@ -1,0 +1,5 @@
+pytorch-lightning
+comet_ml
+torchvision~=0.16.2
+torchmetrics~=1.2.1
+torch

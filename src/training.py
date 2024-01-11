@@ -5,6 +5,8 @@ from models import VGG16
 from torchvision import transforms
 from torch.utils.data import random_split
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
+from pytorch_lightning.loggers import CometLogger
+import comet_ml
 
 path_datasets = "datasets"
 in_chanel = 3
@@ -47,10 +49,16 @@ if __name__ == "__main__":
                                         mode="max",
                                         patience=5)
 
+    # visualization training
+    comet_ml.init(project_name="comet-teacher-pytorch-lightning")
+    comet_logger = CometLogger()
+    comet_logger.log_hyperparams({"batch_size": 32, "learning_rate": 0.0005})
+
     # training model
     trainer = Trainer(accelerator="gpu",
                       devices="auto",
                       max_epochs=30,
+                      logger=comet_logger,
                       callbacks=[checkpoint_callback, early_stop_callback])
 
     trainer.fit(vgg16_lightning_model)
