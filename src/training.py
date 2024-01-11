@@ -1,9 +1,7 @@
 from pytorch_lightning import Trainer
 from lightning_model import LightningModel
-from torchvision.datasets import ImageFolder
 from models import VGG16
-from torchvision import transforms
-from torch.utils.data import random_split
+from utils import get_transforms, load_data
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.loggers import CometLogger
 import comet_ml
@@ -15,24 +13,15 @@ num_classes = 2
 train_size = 20000
 val_size = 5000
 
-transforms = transforms.Compose([transforms.ToTensor(),
-                                 transforms.Resize((224, 224), antialias=True),
-                                 transforms.Normalize((0.5,), (0.5,)),
-                                 transforms.RandomPerspective(distortion_scale=0.5, p=0.1),
-                                 transforms.RandomRotation(degrees=(0, 180)),
-                                 transforms.RandomHorizontalFlip(p=0.5),
-                                 transforms.RandomVerticalFlip(p=0.5)])
-
-
-def load_data(path_data):
-    dataset = ImageFolder(path_data, transforms)
-    train_data, val_data = random_split(dataset, [train_size, val_size])
-    return train_data, val_data
+transforms = get_transforms()["train"]
 
 
 if __name__ == "__main__":
     # load data
-    train_ds, val_ds = load_data(path_data=path_datasets)
+    train_ds, val_ds = load_data(path_data=path_datasets,
+                                 transform=transforms,
+                                 train_size=train_size,
+                                 val_size=val_size)
 
     # load model
     vgg16_model = VGG16(in_chanel=in_chanel, num_classes=num_classes)

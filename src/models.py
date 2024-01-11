@@ -2,9 +2,9 @@ from torch import nn
 
 
 class VGG16(nn.Module):
-    def __init__(self, in_chanel, num_classes=10):
+    def __init__(self, in_chanels, num_classes=10):
         super(VGG16, self).__init__()
-        self.in_chanel = in_chanel
+        self.in_chanel = in_chanels
         self.num_classes = num_classes
 
         self.layer1 = nn.Sequential(
