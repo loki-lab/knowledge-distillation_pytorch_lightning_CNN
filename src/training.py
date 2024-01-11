@@ -40,17 +40,17 @@ if __name__ == "__main__":
 
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
-                                          save_top_k=-1,
+                                          save_top_k=5,
                                           monitor="val_acc_step",
                                           mode="max")
 
-    early_stop_callback = EarlyStopping(monitor="val_acc_step",
-                                        min_delta=0.05,
-                                        mode="max",
-                                        patience=5)
+    early_stop_callback = EarlyStopping(monitor="val_loss_step",
+                                        mode="min",
+                                        patience=5,
+                                        verbose=True)
 
     # visualization training
-    comet_ml.init(project_name="comet-teacher-pytorch-lightning")
+    comet_ml.init(project_name="comet_training-teacher-pytorch-lightning")
     comet_logger = CometLogger(api_key="LBJ57ChbNyjtlvNf4wyWtrJnH")
     comet_logger.log_hyperparams({"batch_size": 32})
 
