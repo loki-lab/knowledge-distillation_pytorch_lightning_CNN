@@ -24,7 +24,7 @@ if __name__ == "__main__":
                                  val_size=val_size)
 
     # load model
-    vgg16_model = VGG16(in_chanel=in_chanel, num_classes=num_classes)
+    vgg16_model = VGG16(in_chanels=in_chanel, num_classes=num_classes)
     vgg16_lightning_model = LightningModel(model=vgg16_model, train_ds=train_ds, val_ds=val_ds)
 
     # callbacks for training
