@@ -66,6 +66,6 @@ class LightningModelDistill(LightningModel):
         train_accuracy = self.accuracy(output, label)
         distill_acc = self.accuracy(output, teacher_output)
         self.log("Distill_train_loss", loss, on_step=False, on_epoch=True)
-        self.log("Distill_train_acc", train_accuracy, on_step=False, on_epoch=True)
-        self.log("train_acc", distill_acc, on_step=False, on_epoch=True)
+        self.log("Distill_train_acc", distill_acc, on_step=False, on_epoch=True)
+        self.log("train_acc", train_accuracy, on_step=False, on_epoch=True)
         return loss
