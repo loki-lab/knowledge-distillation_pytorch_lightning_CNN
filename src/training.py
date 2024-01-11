@@ -8,7 +8,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.loggers import CometLogger
 import comet_ml
 
-path_datasets = "datasets"
+path_datasets = "datasets/PetImg"
 in_chanel = 3
 num_classes = 2
 
@@ -25,7 +25,7 @@ transforms = transforms.Compose([transforms.ToTensor(),
 
 
 def load_data(path_data):
-    dataset = ImageFolder(path_data)
+    dataset = ImageFolder(path_data, transforms)
     train_data, val_data = random_split(dataset, [train_size, val_size])
     return train_data, val_data
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # visualization training
     comet_ml.init(project_name="comet-teacher-pytorch-lightning")
     comet_logger = CometLogger()
-    comet_logger.log_hyperparams({"batch_size": 32, "learning_rate": 0.0005})
+    comet_logger.log_hyperparams({"batch_size": 1, "learning_rate": 0.0005})
 
     # training model
     trainer = Trainer(accelerator="gpu",
