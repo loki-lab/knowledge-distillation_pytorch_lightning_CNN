@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # visualization training
     comet_ml.init(project_name="comet-teacher-pytorch-lightning")
     comet_logger = CometLogger(api_key="LBJ57ChbNyjtlvNf4wyWtrJnH")
-    comet_logger.log_hyperparams({"batch_size": 1, "learning_rate": 0.0005})
+    comet_logger.log_hyperparams({"batch_size": 32, "learning_rate": 0.0005})
 
     # training model
     trainer = Trainer(accelerator="gpu",
