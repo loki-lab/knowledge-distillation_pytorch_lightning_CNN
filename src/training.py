@@ -45,7 +45,7 @@ if __name__ == "__main__":
                                           mode="max")
 
     early_stop_callback = EarlyStopping(monitor="val_acc_step",
-                                        min_delta=0.2,
+                                        min_delta=0.05,
                                         mode="max",
                                         patience=5)
 
