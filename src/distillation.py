@@ -1,5 +1,5 @@
 from pytorch_lightning import Trainer
-from lightning_model import LightningModelDistill
+from lightning_model import LightningModelDistill, LightningModel
 from models import VGG16, VGG11
 from utils import get_transforms, load_data
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
@@ -7,6 +7,7 @@ from pytorch_lightning.loggers import CometLogger
 import comet_ml
 
 path_datasets = "datasets/PetImg"
+checkpoint = "checkpoints/"
 in_chanel = 3
 num_classes = 2
 
@@ -29,13 +30,14 @@ if __name__ == "__main__":
     vgg16_model = VGG16(in_chanels=in_chanel, num_classes=num_classes)
     vgg11_model = VGG11(in_channels=in_chanel, num_classes=num_classes)
 
-    vgg16_lightning_model = LightningModelDistill(teacher_model=vgg16_model,
-                                                  student_model=vgg11_model,
-                                                  train_ds=train_ds,
-                                                  val_ds=val_ds,
-                                                  temp=temp,
-                                                  alpha=alpha
-                                                  )
+    vgg16_lightning_model = LightningModel(model=vgg16_model).load_from_checkpoint(checkpoint)
+    distillation_lightning_model = LightningModelDistill(teacher_model=vgg16_model,
+                                                         student_model=vgg11_model,
+                                                         train_ds=train_ds,
+                                                         val_ds=val_ds,
+                                                         temp=temp,
+                                                         alpha=alpha
+                                                         )
 
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
@@ -60,4 +62,4 @@ if __name__ == "__main__":
                       logger=comet_logger,
                       callbacks=[checkpoint_callback, early_stop_callback])
 
-    trainer.fit(vgg16_lightning_model)
+    trainer.fit(distillation_lightning_model)

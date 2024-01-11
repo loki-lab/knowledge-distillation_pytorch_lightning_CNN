@@ -7,7 +7,7 @@ import torch
 
 
 class LightningModel(LightningModule):
-    def __init__(self, model, train_ds, val_ds):
+    def __init__(self, model, train_ds=None, val_ds=None):
         super().__init__()
         self.model = model
         self.metrics = Accuracy(task="multiclass", num_classes=2)
