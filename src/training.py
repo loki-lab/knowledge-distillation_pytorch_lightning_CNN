@@ -29,7 +29,9 @@ if __name__ == "__main__":
 
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
-                                          save_top_k=5,
+                                          filename="best_model.ckpt",
+                                          save_top_k=1,
+                                          save_last=True,
                                           monitor="val_acc_step",
                                           mode="max")
 

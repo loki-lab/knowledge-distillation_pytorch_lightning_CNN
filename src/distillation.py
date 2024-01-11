@@ -7,7 +7,7 @@ from pytorch_lightning.loggers import CometLogger
 import comet_ml
 
 path_datasets = "datasets/PetImg"
-checkpoint = "checkpoints/"
+checkpoint = "checkpoints/best_model.ckpt"
 in_chanel = 3
 num_classes = 2
 
