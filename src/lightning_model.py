@@ -63,8 +63,8 @@ class LightningModelDistill(LightningModel):
             f.log_softmax(output / self.temp, dim=1),
             f.softmax(teacher_output / self.temp, dim=1)
         ) * (self.alpha * self.temp * self.temp) + f.cross_entropy(output, label) * (1. - self.alpha)
-        train_accuracy = self.accuracy(output, label)
-        distill_acc = self.accuracy(output, teacher_output)
+        train_accuracy = self.metrics(output, label)
+        distill_acc = self.metrics(output, teacher_output)
         self.log("Distill_train_loss", loss, on_step=False, on_epoch=True)
         self.log("Distill_train_acc", distill_acc, on_step=False, on_epoch=True)
         self.log("train_acc", train_accuracy, on_step=False, on_epoch=True)
