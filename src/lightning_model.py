@@ -10,7 +10,7 @@ class LightningModel(LightningModule):
     def __init__(self, model, train_ds=None, val_ds=None):
         super().__init__()
         self.model = model
-        self.metrics = Accuracy(task="multiclass", num_classes=2)
+        self.metrics = Accuracy(task="multiclass", num_classes=self.model.num_classes)
         self.train_ds = train_ds
         self.val_ds = val_ds
 
