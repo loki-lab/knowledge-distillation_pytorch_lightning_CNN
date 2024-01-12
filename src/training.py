@@ -41,7 +41,7 @@ if __name__ == "__main__":
                                         verbose=True)
 
     # visualization training
-    comet_ml.init(project_name="comet_training-teacher-pytorch-lightning")
+    comet_ml.init(project_name="comet_training-student-pytorch-lightning")
     comet_logger = CometLogger(api_key="LBJ57ChbNyjtlvNf4wyWtrJnH")
     comet_logger.log_hyperparams({"batch_size": 32})
 
