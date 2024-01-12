@@ -51,14 +51,17 @@ class LightningModel(LightningModule):
 class LightningModelDistill(LightningModel):
     def __init__(self, teacher_model, student_model, train_ds, val_ds, temp, alpha):
         super().__init__(model=student_model, train_ds=train_ds, val_ds=val_ds)
-        self.teacher_model = teacher_model.eval()
+        self.teacher_model = teacher_model
         self.temp = temp
         self.alpha = alpha
 
     def training_step(self, batch, batch_idx):
         image, label = batch
-        teacher_output = self.teacher_model(image.squeeze(0))
+        print(image.shape)
+        teacher_output = self.teacher_model(image)
+        print(teacher_output.shape)
         output = self.forward(image)
+        print(output.shape)
         loss = nn.KLDivLoss()(
             f.log_softmax(output / self.temp, dim=1),
             f.softmax(teacher_output / self.temp, dim=1)
