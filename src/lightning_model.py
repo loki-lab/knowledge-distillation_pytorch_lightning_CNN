@@ -42,10 +42,10 @@ class LightningModel(LightningModule):
         return loss
 
     def train_dataloader(self):
-        return DataLoader(self.train_ds, batch_size=8, shuffle=True, num_workers=2)
+        return DataLoader(self.train_ds, batch_size=32, shuffle=True, num_workers=2)
 
     def val_dataloader(self):
-        return DataLoader(self.val_ds, batch_size=8, shuffle=False, num_workers=2)
+        return DataLoader(self.val_ds, batch_size=32, shuffle=False, num_workers=2)
 
 
 class LightningModelDistill(LightningModel):
@@ -57,7 +57,7 @@ class LightningModelDistill(LightningModel):
 
     def training_step(self, batch, batch_idx):
         image, label = batch
-        teacher_output = self.teacher_model(image)
+        teacher_output = self.teacher_model.forward(image)
         output = self.forward(image)
         loss = nn.KLDivLoss()(
             f.log_softmax(output / self.temp, dim=1),
