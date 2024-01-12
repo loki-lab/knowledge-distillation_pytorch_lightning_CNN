@@ -1,6 +1,6 @@
 from pytorch_lightning import Trainer
 from lightning_model import LightningModel
-from models import VGG16
+from models import VGG11
 from utils import get_transforms, load_data
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.loggers import CometLogger
@@ -24,12 +24,12 @@ if __name__ == "__main__":
                                  val_size=val_size)
 
     # load model
-    vgg16_model = VGG16(in_chanels=in_chanel, num_classes=num_classes)
-    vgg16_lightning_model = LightningModel(model=vgg16_model, train_ds=train_ds, val_ds=val_ds)
+    vgg11_model = VGG11(in_channels=in_chanel, num_classes=num_classes)
+    vgg11_lightning_model = LightningModel(model=vgg11_model, train_ds=train_ds, val_ds=val_ds)
 
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
-                                          filename="best_model",
+                                          filename="vgg11_best_model",
                                           save_top_k=1,
                                           save_last=True,
                                           monitor="val_acc",
@@ -52,4 +52,4 @@ if __name__ == "__main__":
                       logger=comet_logger,
                       callbacks=[checkpoint_callback, early_stop_callback])
 
-    trainer.fit(vgg16_lightning_model)
+    trainer.fit(vgg11_lightning_model)
