@@ -30,8 +30,8 @@ if __name__ == "__main__":
     vgg16_model = VGG16(in_chanels=in_chanel, num_classes=num_classes)
     vgg11_model = VGG11(in_channels=in_chanel, num_classes=num_classes)
 
-    vgg16_lightning_model = LightningModel(model=vgg16_model)
-    distillation_lightning_model = LightningModelDistill(teacher_model=vgg16_lightning_model.load_from_checkpoint(checkpoint),
+    vgg16_lightning_model = LightningModel.load_from_checkpoint("checkpoints/best_model")
+    distillation_lightning_model = LightningModelDistill(teacher_model=vgg16_lightning_model,
                                                          student_model=vgg11_model,
                                                          train_ds=train_ds,
                                                          val_ds=val_ds,
@@ -41,6 +41,7 @@ if __name__ == "__main__":
 
     # callbacks for training
     checkpoint_callback = ModelCheckpoint(dirpath="checkpoints",
+                                          filename="best_distill_model",
                                           save_top_k=4,
                                           monitor="val_acc",
                                           mode="max")
