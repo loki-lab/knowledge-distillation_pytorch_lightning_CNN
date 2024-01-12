@@ -7,7 +7,7 @@ from pytorch_lightning.loggers import CometLogger
 import comet_ml
 
 path_datasets = "datasets/PetImg"
-checkpoint = "checkpoints/best_model.ckpt"
+checkpoint = "checkpoints/best_model"
 in_chanel = 3
 num_classes = 2
 
@@ -30,8 +30,8 @@ if __name__ == "__main__":
     vgg16_model = VGG16(in_chanels=in_chanel, num_classes=num_classes)
     vgg11_model = VGG11(in_channels=in_chanel, num_classes=num_classes)
 
-    vgg16_lightning_model = LightningModel(model=vgg16_model).load_from_checkpoint(checkpoint)
-    distillation_lightning_model = LightningModelDistill(teacher_model=vgg16_lightning_model,
+    vgg16_lightning_model = LightningModel(model=vgg16_model)
+    distillation_lightning_model = LightningModelDistill(teacher_model=vgg16_lightning_model.load_from_checkpoint(checkpoint),
                                                          student_model=vgg11_model,
                                                          train_ds=train_ds,
                                                          val_ds=val_ds,
