@@ -77,7 +77,7 @@ class LightningModelDistill(LightningModel):
 
     def validation_step(self, batch, batch_idx):
         image, label = batch
-        _,output = self.forward(image)
+        _, output = self.forward(image)
         loss = nn.CrossEntropyLoss()(output, label)
         accuracy = self.metrics(output, label)
         self.log("val_loss", loss, on_step=False, on_epoch=True)
