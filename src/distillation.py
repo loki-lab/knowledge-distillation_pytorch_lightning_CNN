@@ -53,15 +53,14 @@ if __name__ == "__main__":
                                         verbose=True)
 
     # visualization training
-    comet_ml.init(project_name="comet_training-distillation-pytorch-lightning")
-    comet_logger = CometLogger(api_key="LBJ57ChbNyjtlvNf4wyWtrJnH")
-    comet_logger.log_hyperparams({"batch_size": 32})
+    # comet_ml.init(project_name="comet_training-distillation-pytorch-lightning")
+    # comet_logger = CometLogger(api_key="LBJ57ChbNyjtlvNf4wyWtrJnH")
+    # comet_logger.log_hyperparams({"batch_size": 32})
 
     # training model
     trainer = Trainer(accelerator="gpu",
                       devices="auto",
                       max_epochs=30,
-                      logger=comet_logger,
                       callbacks=[checkpoint_callback, early_stop_callback])
 
     trainer.fit(distillation_lightning_model)
