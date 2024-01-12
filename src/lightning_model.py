@@ -62,8 +62,8 @@ class LightningModelDistill(LightningModel):
 
     def training_step(self, batch, batch_idx):
         image, label = batch
-        teacher_output = self.forward(image)[0]
-        output = self.forward(image)[1]
+        teacher_output = self.forward(image)[0][0]
+        output = self.forward(image)[1][0]
         loss = nn.KLDivLoss()(
             f.log_softmax(output / self.temp, dim=1),
             f.softmax(teacher_output / self.temp, dim=1)
